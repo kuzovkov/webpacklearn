@@ -1,0 +1,10 @@
+body {
+  background-color: red;
+}
+body:hover {
+  background-color: blue;
+}
+html {
+  padding: 0;
+  margin: 0;
+}
