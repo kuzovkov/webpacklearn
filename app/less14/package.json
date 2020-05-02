@@ -1,0 +1,17 @@
+{
+  "name": "test-webpack-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.5.3",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.2.0"
+  }
+}

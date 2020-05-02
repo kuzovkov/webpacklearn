@@ -297,6 +297,87 @@ module.exports = {
 };
 ```
 
+#Loaders
+(для подключения файлов не JS, например `typescript`)
+
+```bash
+npm install --save-dev awesome-typescript-loader typescript
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    mode: 'development',
+    context: path.join(__dirname, 'src'),
+    entry: './index',
+
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: 'awesome-typescript-loader'
+            }
+        ]
+    }
+};
+```
+
+#CSS Loaders. ExtractTextPlugin
+
+```bash
+npm install --save-dev css-loader style-loader
+npm i -D --saev-dev extract-text-webpack-plugin@next
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    mode: 'development',
+    entry: {
+        index: './index.js',
+        styles: './styles.css'
+    },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                //use: ['style-loader', 'css-loader'],
+                 use: ExtractTextPlugin.extract({
+                     fallback: 'style-loader',
+                     use: 'css-loader'
+                 })
+            }
+        ]
+    },
+    //
+     plugins: [
+         new ExtractTextPlugin('[name].css')
+     ]
+};
+```
+
+
+
 
 
 
