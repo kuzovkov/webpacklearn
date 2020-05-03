@@ -1,0 +1,19 @@
+{
+  "name": "test-webpack-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "exports-loader": "^0.7.0",
+    "expose-loader": "^0.7.5",
+    "webpack": "^4.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}

@@ -379,7 +379,7 @@ module.exports = {
 #Less Loader
 
 ```bash
-npm i -D --saev-dev extract-text-webpack-plugin@next
+npm i -D --save-dev extract-text-webpack-plugin@next
 npm install --save-dev css-loader less less-loader style-loader
 ```
 `webpack.config.js`:
@@ -418,6 +418,185 @@ module.exports = {
     ]
 };
 ```
+#Export и Expose Loaders
+(для использовани legacy кода:
+создание глобальных переменных и экспорт из файлов в которых нет экспорта)
+    
+```bash
+npm install -save-dev exports-loader expose-loader
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: {
+        index: './index',
+        vendor: ['jquery']
+    },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+
+    module: {
+        rules: [{
+            test: require.resolve('jquery'),
+            loader: 'expose-loader?$'
+        }, {
+            test: /no-export.js/,
+            loader: 'exports-loader?hiddenConst'
+        }]
+    }
+};
+```
+
+#Strip Loader
+(для удаления отладочного кода: console.log, console.warn, alert и т.д.)
+ 
+```bash
+npm install strip-loader
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: './index',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+
+    module: {
+        rules: [{
+            test: /\.js$/,
+            loader: 'strip-loader',
+            options: {
+                strip: ['console.log', 'alert']
+            }
+        }]
+    }
+};
+```
+
+#File Loader
+
+```bash
+npm install --save-dev file-loader
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: './index',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+
+    module: {
+        rules: [{
+            test: /\.png$/,
+            loader: 'file-loader',
+            options: {
+                name: '[path][name].[ext]?[hash]'
+            }
+        }]
+    }
+};
+```
+
+#Webpack Dev Server
+
+```bash
+npm install --save-dev html-webpack-plugin webpack-dev-server
+npm install -g webpack-dev-server
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+const HtmlPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: './index',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+
+    plugins: [
+        new HtmlPlugin({
+            title: 'Webpack dev server'
+        })
+    ]
+};
+```
+Run server:
+```bash
+webpack-dev-server --host=0.0.0.0
+```
+Go to:  http://localhost:8080
+
+#Hot Module Replacement
+(горячая перезагрузка страницы)
+```bash
+npm install --save-dev html-webpack-plugin webpack-dev-server
+npm install -g webpack-dev-server
+npm install --save-dev style-loader css-loader
+```
+`webpack.config.js`:
+
+```javascript
+const path = require('path');
+const webpack = require('webpack');
+const HtmlPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: './index',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            }
+        ]
+    },
+
+    plugins: [
+        new HtmlPlugin({
+            title: 'Webpack dev server'
+        }),
+        new webpack.HotModuleReplacementPlugin()
+    ],
+
+    devServer: {
+        hot: true
+    }
+};
+```
+Run server:
+```bash
+webpack-dev-server --host=0.0.0.0
+```
+Go to:  http://localhost:8080
+
+
 
 
 
