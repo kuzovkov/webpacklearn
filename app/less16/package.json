@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "exports-loader": "^0.7.0",
+    "exports-loader": "^4.0.0",
     "expose-loader": "^0.7.5",
-    "webpack": "^4.2.0"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "jquery": "^3.1.1"
